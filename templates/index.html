@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Email Spam Detector</title>
+
+  <style>
+    :root{
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --accent: #0b5cff;
+      --muted: #6b7280;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --shadow: 0 10px 30px rgba(15,23,42,0.06);
+      --radius: 12px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui;
+      background:linear-gradient(180deg,var(--bg),#ffffff);
+      color:#0f172a;
+      padding:40px 20px;
+    }
+    .wrap{max-width:900px;margin:0 auto;}
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+    h1{
+      margin:0 0 6px 0;
+      text-align:center;
+      color:var(--accent);
+      font-size:34px;
+    }
+
+    label{font-weight:600;color:#0f172a}
+    textarea{
+      width:100%;
+      min-height:180px;
+      padding:14px;
+      border-radius:10px;
+      border:1px solid #e6e9ef;
+      resize:vertical;
+      background:#fbfdff;
+    }
+
+    .btn{
+      padding:12px 18px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+      font-size:16px;
+      display:inline-flex;
+      justify-content:center;
+      background:var(--accent);
+      color:#fff;
+      width:100%;
+      margin-top:14px;
+      box-shadow:0 6px 18px rgba(11,92,255,0.12);
+    }
+
+    .result{margin-top:18px;display:flex;flex-direction:column;align-items:center;}
+    .badge{
+      min-width:280px;
+      padding:18px 24px;
+      border-radius:12px;
+      font-size:22px;
+      font-weight:800;
+      text-align:center;
+      color:#fff;
+      box-shadow:0 8px 24px rgba(0,0,0,0.06);
+    }
+    .spam{background:var(--danger);}
+    .ham{background:var(--success);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Email Spam Detector</h1>
+
+      <form method="post" action="/predict_web">
+        <label>Enter your email here:</label>
+        <textarea name="email_text" placeholder="Type your email content..."></textarea>
+
+        <button class="btn" type="submit">Predict</button>
+      </form>
+
+      <div class="result">
+        {% if prediction_text %}
+          {% if 'spam' in prediction_text.lower() %}
+            <div class="badge spam">SPAM</div>
+          {% else %}
+            <div class="badge ham">HAM</div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
